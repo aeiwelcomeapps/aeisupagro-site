@@ -11,6 +11,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="img/logo-aei.png">
+  <style>
+    /* Bouton de telechargement direct Android (APK) - ajoute pour la distribution web */
+    .dl-direct { margin-top: 26px; }
+    .dl-apk { background: var(--vert); }
+    .dl-apk:hover { background: var(--vert-fonce); }
+    .dl-note {
+      color: var(--gris);
+      font-size: 0.85rem;
+      margin: 14px auto 0;
+      max-width: 440px;
+    }
+  </style>
 </head>
 <body data-page="app">
 
@@ -74,7 +86,7 @@
 
     <div class="conteneur" style="text-align:center; margin-top:50px;">
       <h2 style="margin-bottom:8px;" data-i18n="app.dl.h">Télécharger l'application</h2>
-      <p style="color:var(--gris);" data-i18n="app.dl.p">Bientôt disponible sur l'App Store et Google Play.</p>
+      <p style="color:var(--gris);" data-i18n="app.dl.p">Disponible dès maintenant sur Android. Bientôt sur l'App Store et Google Play.</p>
       <div class="stores">
         <a href="#" class="btn-store" aria-label="Bientôt sur l'App Store" onclick="return false;">
           <i class="fa-brands fa-apple"></i>
@@ -86,6 +98,20 @@
           <span class="store-txt"><span class="petit" data-i18n="app.store.on2">Disponible sur</span><span class="gros">Google Play</span></span>
           <span class="soon" data-i18n="app.store.soon">Bientôt</span>
         </a>
+      </div>
+
+      <!-- Telechargement direct Android (APK) : disponible maintenant, en attendant le Play Store -->
+      <div class="dl-direct">
+        <a href="https://storage.googleapis.com/aeiwelcome-da281-maps/AEIWelcome-2.0.0.apk"
+           class="btn-store dl-apk" download
+           aria-label="Télécharger l'application Android (fichier APK)">
+          <i class="fa-brands fa-android"></i>
+          <span class="store-txt">
+            <span class="petit" data-i18n="app.dl.direct.small">Disponible maintenant · Android</span>
+            <span class="gros" data-i18n="app.dl.direct.big">Télécharger l'APK</span>
+          </span>
+        </a>
+        <p class="dl-note" data-i18n="app.dl.direct.note">Installation directe, hors Play Store. À la première ouverture, gardez une connexion internet.</p>
       </div>
     </div>
   </section>
@@ -131,5 +157,57 @@
 
   <script src="js/script.js"></script>
   <script src="js/i18n.js"></script>
+  <script>
+    /* Traductions du bouton de telechargement direct Android (ajoutees a AEI_I18N,
+       avant l'application de la langue au chargement). Aucune modif de i18n.js necessaire. */
+    (function () {
+      if (typeof AEI_I18N === 'undefined') return;
+      var t = {
+        fr: {
+          s: "Disponible maintenant · Android",
+          b: "Télécharger l'APK",
+          n: "Installation directe, hors Play Store. À la première ouverture, gardez une connexion internet.",
+          p: "Disponible dès maintenant sur Android. Bientôt sur l'App Store et Google Play."
+        },
+        en: {
+          s: "Available now · Android",
+          b: "Download the APK",
+          n: "Direct install, outside the Play Store. Keep an internet connection on first launch.",
+          p: "Available now on Android. Coming soon to the App Store and Google Play."
+        },
+        es: {
+          s: "Disponible ahora · Android",
+          b: "Descargar el APK",
+          n: "Instalación directa, fuera de Google Play. Mantén conexión a internet al abrir por primera vez.",
+          p: "Ya disponible en Android. Próximamente en la App Store y Google Play."
+        },
+        it: {
+          s: "Disponibile ora · Android",
+          b: "Scarica l'APK",
+          n: "Installazione diretta, fuori da Google Play. Mantieni la connessione a internet al primo avvio.",
+          p: "Già disponibile su Android. Presto su App Store e Google Play."
+        },
+        pt: {
+          s: "Disponível agora · Android",
+          b: "Baixar o APK",
+          n: "Instalação direta, fora da Play Store. Mantenha ligação à internet na primeira abertura.",
+          p: "Já disponível no Android. Brevemente na App Store e no Google Play."
+        },
+        zh: {
+          s: "现已推出 · Android",
+          b: "下载 APK",
+          n: "在 Google Play 之外直接安装。首次打开时请保持网络连接。",
+          p: "Android 版现已推出。即将登陆 App Store 和 Google Play。"
+        }
+      };
+      Object.keys(t).forEach(function (lang) {
+        if (!AEI_I18N[lang]) return;
+        AEI_I18N[lang]["app.dl.direct.small"] = t[lang].s;
+        AEI_I18N[lang]["app.dl.direct.big"]   = t[lang].b;
+        AEI_I18N[lang]["app.dl.direct.note"]  = t[lang].n;
+        AEI_I18N[lang]["app.dl.p"]            = t[lang].p;
+      });
+    })();
+  </script>
 </body>
 </html>
