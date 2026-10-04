@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Politique de confidentialité | AEI - Institut Agro Montpellier</title>
+  <meta name="description" content="Politique de confidentialité de l'application AEIWelcome et du site de l'AEI, Institut Agro Montpellier.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="img/logo-aei.png">
+</head>
+<body data-page="priv">
+
+  <header class="entete">
+    <div class="conteneur entete-inner">
+      <a href="index.html" class="logo">
+        <img src="img/logo-aei.png" alt="Logo AEI">
+        <span class="logo-texte">
+          <span class="nom">AEI</span>
+          <span class="sous">Institut Agro Montpellier</span>
+        </span>
+      </a>
+      <nav>
+        <ul class="nav-liens" id="menu">
+          <li><a href="index.html" data-i18n="nav.home">Accueil</a></li>
+          <li><a href="l-aei.html" data-i18n="nav.aei">L\'AEI</a></li>
+          <li><a href="equipe.html" data-i18n="nav.team">L\'équipe</a></li>
+          <li><a href="actions.html" data-i18n="nav.actions">Nos actions</a></li>
+          <li><a href="application.html" data-i18n="nav.app">L\'application</a></li>
+          <li><a href="faq.html" data-i18n="nav.faq">FAQ</a></li>
+          <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="burger" id="burger" aria-label="Menu">&#9776;</button>
+    </div>
+  </header>
+
+  <section class="banniere">
+    <div class="conteneur">
+      <div class="fil"><a href="index.html" data-i18n="nav.home">Accueil</a> &rsaquo; <span data-i18n="priv.crumb">Politique de confidentialité</span></div>
+      <h1 data-i18n="priv.h1">Politique de confidentialité</h1>
+      <p data-i18n="priv.sub">Application AEIWelcome et site de l'AEI - Institut Agro Montpellier</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur prose">
+      <p><em>Dernière mise à jour : 20 juillet 2026</em></p>
+
+      <p>Bienvenue sur AEIWelcome (l'« Application »), l'application mobile de l'AEI (Accueil des Étudiants Internationaux) qui accompagne les étudiants internationaux dans leur intégration à l'Institut Agro Montpellier : guide pratique, carte du campus et de Montpellier, événements et démarches administratives.</p>
+
+      <p>Cette page vous informe de nos politiques concernant la collecte, l'utilisation et la divulgation des données personnelles lorsque vous utilisez notre Application ou notre site web, et des choix qui s'offrent à vous concernant ces données.</p>
+
+      <h2>1. Collecte et utilisation des informations</h2>
+
+      <h3>a. Données personnelles</h3>
+      <p>Lors de l'utilisation de l'Application, nous pouvons vous demander de nous fournir certaines informations personnellement identifiables, notamment :</p>
+      <ul>
+        <li>Adresse e-mail</li>
+        <li>Prénom et nom</li>
+        <li>Données d'utilisation et de journal</li>
+      </ul>
+
+      <h3>b. Données d'utilisation</h3>
+      <p>Nous pouvons collecter des informations sur la manière dont l'Application est utilisée (type d'appareil, version du système d'exploitation, pages consultées, date et heure de visite, et autres données de diagnostic).</p>
+
+      <h3>c. Données de localisation</h3>
+      <p>La fonctionnalité de carte interactive de l'Application peut utiliser votre position géographique, si vous y consentez, afin de vous guider vers le campus ou d'autres lieux utiles à Montpellier. Vous pouvez activer ou désactiver les services de localisation à tout moment via les paramètres de votre appareil.</p>
+
+      <h2>2. Utilisation des données</h2>
+      <p>Les données collectées servent à :</p>
+      <ul>
+        <li>Fournir et maintenir l'Application (guide, carte, événements, démarches)</li>
+        <li>Vous informer des mises à jour de l'Application</li>
+        <li>Vous permettre de participer aux fonctionnalités interactives (inscription à des événements, par exemple)</li>
+        <li>Fournir un support aux utilisateurs</li>
+        <li>Améliorer l'Application et détecter d'éventuels problèmes techniques</li>
+      </ul>
+
+      <h2>3. Partage des données</h2>
+      <p>Nous ne vendons, n'échangeons ni ne louons vos données personnelles à des tiers. Nous pouvons les partager uniquement :</p>
+      <ul>
+        <li>Avec des prestataires techniques qui nous aident à faire fonctionner l'Application (hébergement, notifications), tenus de ne pas les utiliser à d'autres fins ;</li>
+        <li>Si la loi l'exige, ou pour protéger les droits et la sécurité des utilisateurs.</li>
+      </ul>
+
+      <h2>4. Sécurité des données</h2>
+      <p>Nous mettons en œuvre des moyens raisonnables pour protéger vos données, mais aucune méthode de transmission ou de stockage électronique n'est sûre à 100 %.</p>
+
+      <h2>5. Vos droits</h2>
+      <p>Vous pouvez à tout moment demander l'accès, la mise à jour ou la suppression de vos données personnelles en nous contactant (voir ci-dessous).</p>
+
+      <h2>6. Confidentialité des mineurs</h2>
+      <p>L'Application s'adresse aux étudiants de l'enseignement supérieur et ne collecte pas sciemment de données auprès de personnes de moins de 13 ans.</p>
+
+      <h2>7. Modifications de cette politique</h2>
+      <p>Cette politique de confidentialité peut être mise à jour. Toute modification sera publiée sur cette page avec une nouvelle date de mise à jour.</p>
+
+      <h2>8. Nous contacter</h2>
+      <p>Pour toute question concernant cette politique de confidentialité : <a href="mailto:asso-aei@supagro.fr">asso-aei@supagro.fr</a></p>
+    </div>
+  </section>
+
+  <footer class="pied">
+    <div class="conteneur">
+      <div class="pied-grille">
+        <div>
+          <div class="pied-logo">
+            <img src="img/logo-aei.png" alt="Logo AEI">
+            <span class="nom">AEI</span>
+          </div>
+          <p data-i18n="foot.desc">Accueil des Étudiants Internationaux<br>Institut Agro Montpellier</p>
+          <div class="reseaux">
+            <a href="https://www.instagram.com/aei.institut.agro.montpellier" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/accueil-des-%C3%A9tudiants-internationaux/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=100083180476560" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 data-i18n="foot.nav">Navigation</h4>
+          <ul class="pied-liens">
+            <li><a href="l-aei.html" data-i18n="nav.aei">L\'AEI</a></li>
+            <li><a href="equipe.html" data-i18n="nav.team">L\'équipe</a></li>
+            <li><a href="actions.html" data-i18n="nav.actions">Nos actions</a></li>
+            <li><a href="application.html" data-i18n="nav.app">L\'application</a></li>
+            <li><a href="faq.html" data-i18n="nav.faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="foot.contact">Contact</h4>
+          <ul class="pied-liens">
+            <li><a href="mailto:asso-aei@supagro.fr">asso-aei@supagro.fr</a></li>
+            <li><a href="contact.html" data-i18n="foot.form">Formulaire de contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pied-bas">
+        <span data-i18n="foot.rights">&copy; 2026 AEI - Institut Agro Montpellier. Tous droits réservés.</span>
+        &middot; <a href="politique-confidentialite.html" data-i18n="foot.privacy" style="color:inherit;">Politique de confidentialité</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script src="js/i18n.js"></script>
+</body>
+</html>
