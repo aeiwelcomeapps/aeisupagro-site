@@ -39,7 +39,7 @@ const AEI_I18N = {
     "foot.privacy": "Politique de confidentialité",
 
     "hero.badge": "📍 Campus de Montpellier",
-    "hero.eyebrow": "🎓 Club des étudiants internationaux",
+    "hero.eyebrow": "🎓 Club d'Accueil des Étudiants Internationaux",
     "hero.title": "Bienvenue chez vous, à l'Institut Agro et à Montpellier.",
     "hero.text": "L'AEI accompagne et accueille les étudiants internationaux de l'Institut Agro Montpellier, dès leur admission et tout au long de leur séjour.",
     "hero.btn1": "Découvrir l'application →",
