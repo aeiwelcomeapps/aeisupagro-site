@@ -61,7 +61,7 @@
 
 /* ---------- Reset ---------- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; color-scheme: light; }
 body {
   font-family: var(--font-texte);
   color: var(--noir);
@@ -407,14 +407,17 @@ h1, h2, h3, h4 {
 .guide-visuel {
   display: flex;
   justify-content: center;
+  transition: var(--transition);
 }
-.guide-visuel .icon {
-  font-size: 8rem;
-  color: var(--jaune);
+.guide-visuel img {
+  width: 230px;
+  height: auto;
+  border: 1px solid var(--gris-clair);
 }
+.guide-visuel:hover { transform: translateY(-4px); }
 @media (max-width: 900px) {
   .guide-bloc { grid-template-columns: 1fr; padding: 34px; text-align: center; gap: 30px; }
-  .guide-visuel .icon { font-size: 5rem; }
+  .guide-visuel img { width: 180px; }
 }
 
 /* ---------- Page interieure : banniere titre ---------- */
@@ -428,6 +431,25 @@ h1, h2, h3, h4 {
 .banniere p { color: #d6e2db; max-width: 620px; margin: 0 auto; font-size: 1.1rem; }
 .fil { font-size: 0.85rem; color: #a9bdb2; margin-bottom: 18px; }
 .fil a { color: var(--blanc); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Variante bannieres avec illustration (texte a gauche, image a droite) */
+.banniere-illustree .conteneur {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  text-align: left;
+  flex-wrap: wrap;
+}
+.banniere-illustree .banniere-texte { flex: 1 1 360px; }
+.banniere-illustree .banniere-texte p { margin: 0; }
+.banniere-illustree .banniere-img { flex: 0 0 220px; width: 220px; }
+.banniere-illustree .banniere-img img,
+.banniere-illustree .banniere-img svg { width: 100%; height: auto; display: block; }
+@media (max-width: 640px) {
+  .banniere-illustree .conteneur { text-align: center; justify-content: center; }
+  .banniere-illustree .banniere-img { flex-basis: 140px; width: 140px; order: -1; }
+}
 
 /* ---------- Contenu texte (pages) ---------- */
 .prose { max-width: 800px; margin: 0 auto; }
@@ -518,16 +540,16 @@ h1, h2, h3, h4 {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background: var(--noir);
+  background: var(--vert);
   color: var(--blanc);
   padding: 12px 24px;
   border-radius: 0;
   transition: var(--transition);
   position: relative;
 }
-.btn-store:hover { background: var(--vert); }
+.btn-store:hover { background: var(--vert-fonce); }
 .btn-store-disabled { opacity: 0.7; cursor: not-allowed; }
-.btn-store-disabled:hover { background: var(--noir); }
+.btn-store-disabled:hover { background: var(--vert); }
 .btn-store .icon { font-size: 1.8rem; }
 .btn-store .store-txt { display: flex; flex-direction: column; line-height: 1.2; text-align: left; }
 .btn-store .store-txt .petit { font-size: 0.7rem; opacity: 0.8; }
@@ -552,12 +574,16 @@ h1, h2, h3, h4 {
 .form-contact textarea {
   width: 100%;
   padding: 13px 16px;
+  background: var(--blanc);
+  color: var(--noir);
   border: 1px solid var(--gris-clair);
   border-radius: var(--radius-sm);
   font-family: var(--font-texte);
   font-size: 1rem;
   transition: var(--transition);
 }
+.form-contact input::placeholder,
+.form-contact textarea::placeholder { color: var(--gris); opacity: 1; }
 .form-contact input:focus,
 .form-contact textarea:focus {
   outline: none;
