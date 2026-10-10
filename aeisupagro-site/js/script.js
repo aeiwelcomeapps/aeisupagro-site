@@ -16,6 +16,32 @@ if (burger && menu) {
   });
 }
 
+// Apparition douce au defilement (cartes, titres de section, membres, etc.)
+// Progressive enhancement : sans JS ou avec prefers-reduced-motion, le
+// contenu est deja visible normalement (voir .reveal dans style.css).
+(function() {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cibles = document.querySelectorAll(
+    '.carte, .section-titre, .membre, .contact-carte, .galerie img, .pole-titre, .faq-item, .guide-bloc, .banniere-illustree .banniere-img'
+  );
+  if (!cibles.length || !('IntersectionObserver' in window)) return;
+
+  const observateur = new IntersectionObserver((entrees) => {
+    entrees.forEach((entree) => {
+      if (entree.isIntersecting) {
+        entree.target.classList.add('reveal-in');
+        observateur.unobserve(entree.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  cibles.forEach((el, i) => {
+    el.classList.add('reveal');
+    el.style.transitionDelay = `${Math.min(i % 6, 5) * 70}ms`;
+    observateur.observe(el);
+  });
+})();
+
 // Carrousel de fond du hero
 // L'image principale (classe "principale") reste affichee plus longtemps.
 (function() {

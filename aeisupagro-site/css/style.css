@@ -33,6 +33,21 @@
   --transition: 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* ---------- Apparition douce au defilement ----------
+   Applique par js/script.js a une liste ciblee d'elements (cartes, titres de
+   section, membres...). Si le JS ne tourne pas, la classe .reveal n'est
+   jamais ajoutee et le contenu reste visible normalement : pas de risque de
+   contenu invisible sans JS. */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.reveal-in { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
 /* ---------- Transitions fluides entre pages (View Transitions API) ----------
    Progressive enhancement : navigateurs compatibles (Chrome/Edge recents) font
    un fondu enchaine en changeant de page, les autres navigateurs ne voient rien
@@ -122,8 +137,11 @@ h1, h2, h3, h4 {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--blanc);
-  border-bottom: 1px solid var(--gris-clair);
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border-bottom: 1px solid rgba(229,229,223,0.7);
+  transition: background-color var(--transition), box-shadow var(--transition);
 }
 .entete-inner {
   display: flex;
@@ -148,19 +166,37 @@ h1, h2, h3, h4 {
   gap: 32px;
 }
 .nav-liens a {
+  position: relative;
   font-size: 0.82rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--gris-fonce);
-  padding: 6px 0;
-  border-bottom: 3px solid transparent;
-  transition: var(--transition);
+  padding: 9px 14px;
+  border-radius: 999px;
+  transition: color var(--transition);
+  z-index: 1;
+}
+/* "Bulle" animee derriere le lien au survol : nait au centre, se dilate en douceur */
+.nav-liens a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--vert-clair);
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: -1;
 }
 .nav-liens a:hover,
 .nav-liens a.actif {
-  color: var(--vert);
-  border-bottom-color: var(--jaune);
+  color: var(--vert-fonce);
+}
+.nav-liens a:hover::before,
+.nav-liens a.actif::before {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* Bouton burger (mobile) */
@@ -179,6 +215,7 @@ h1, h2, h3, h4 {
 
 /* ---------- Boutons ---------- */
 .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -189,15 +226,29 @@ h1, h2, h3, h4 {
   border-radius: 999px;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: var(--transition);
+  overflow: hidden;
+  transition: var(--transition), box-shadow var(--transition);
 }
+/* Reflet qui balaie le bouton au survol, discret et rapide (pas un gimmick repete en boucle) */
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -60%;
+  width: 40%; height: 100%;
+  background: linear-gradient(115deg, transparent, rgba(255,255,255,0.45), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+.btn:hover::after { left: 130%; }
 .btn-jaune { background: var(--jaune); color: var(--noir); }
-.btn-jaune:hover { background: var(--jaune-fonce); transform: translateY(-2px); }
+.btn-jaune:hover { background: var(--jaune-fonce); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(245,166,35,0.35); }
 .btn-vert { background: var(--vert); color: var(--blanc); }
-.btn-vert:hover { background: var(--vert-fonce); transform: translateY(-2px); }
+.btn-vert:hover { background: var(--vert-fonce); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(26,92,58,0.3); }
 .btn-contour { background: transparent; color: var(--vert); border-color: var(--vert); }
 .btn-contour:hover { background: var(--vert); color: var(--blanc); }
-.btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+.btn:disabled::after { display: none; }
 
 /* ---------- Hero ---------- */
 .hero {
@@ -341,7 +392,9 @@ h1, h2, h3, h4 {
   justify-content: center;
   font-size: 1.4rem;
   margin-bottom: 20px;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background-color var(--transition);
 }
+.carte:hover .carte-icone { transform: scale(1.1) rotate(-4deg); background: var(--jaune-clair); }
 .carte-photo {
   display: block;
   width: calc(100% + 56px);
@@ -349,7 +402,9 @@ h1, h2, h3, h4 {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: var(--radius) var(--radius) 0 0;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
+.carte:hover .carte-photo { transform: scale(1.05); }
 .carte h3 { font-size: 1.3rem; margin-bottom: 12px; }
 .carte p { color: var(--gris); }
 
@@ -443,8 +498,8 @@ h1, h2, h3, h4 {
     box-shadow: -6px 0 20px rgba(0,0,0,0.08);
   }
   .nav-liens.ouvert { transform: translateX(0); }
-  .nav-liens a { width: 100%; border-bottom: 1px solid var(--gris-clair); padding: 12px 0; }
-  .nav-liens a:hover, .nav-liens a.actif { border-bottom-color: var(--gris-clair); }
+  .nav-liens a { width: 100%; border-bottom: 1px solid var(--gris-clair); border-radius: 0; padding: 12px 10px; }
+  .nav-liens a::before { border-radius: 10px; }
   .burger { display: flex; }
   .pied-grille { grid-template-columns: 1fr; gap: 30px; }
   .hero { min-height: 480px; }
@@ -503,7 +558,7 @@ h1, h2, h3, h4 {
 .banniere-illustree .banniere-texte p { margin: 0; }
 .banniere-illustree .banniere-img { flex: 0 0 220px; width: 220px; }
 .banniere-illustree .banniere-img img,
-.banniere-illustree .banniere-img svg { width: 100%; height: auto; display: block; }
+.banniere-illustree .banniere-img svg { width: 100%; height: auto; display: block; border-radius: var(--radius); }
 @media (max-width: 640px) {
   .banniere-illustree .conteneur { text-align: center; justify-content: center; }
   .banniere-illustree .banniere-img { flex-basis: 140px; width: 140px; order: -1; }
