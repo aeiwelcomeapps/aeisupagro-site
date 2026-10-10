@@ -16,6 +16,55 @@ if (burger && menu) {
   });
 }
 
+// Bulle "mot gentil" au survol des membres de l'equipe : un mot tire au
+// hasard dans une liste, redifferent a chaque survol (y compris en
+// repassant sur la meme photo apres etre parti). Le CSS lit la valeur
+// vivante de data-mot via content: attr(data-mot) -- aucune autre
+// modification necessaire cote CSS. Sans JS, chaque membre garde son mot
+// gentil fixe defini dans le HTML (degradation normale, rien de casse).
+(function() {
+  const motsGentils = [
+    'Merci pour tout ! 🌟', 'Toujours là ! 💪', 'Super équipe ! ✨',
+    'Un vrai pilier ! 🙌', 'Précieux conseil ! 💚', 'Toujours créative ! 🎨',
+    'Pleine d\'énergie ! ⚡', 'Reine de la fête ! 🎉', 'Sourire contagieux ! 😊',
+    'Toujours partant ! 🚀', 'Un vrai bonheur ! 🌈', 'Merci à toi ! 🤍',
+    'Top motivation ! 🔥', 'Toujours souriant·e ! 😄', 'Génial, merci ! 👏'
+  ];
+  const membres = document.querySelectorAll('.membre[data-mot]');
+  membres.forEach((el) => {
+    el.addEventListener('mouseenter', () => {
+      const mot = motsGentils[Math.floor(Math.random() * motsGentils.length)];
+      el.dataset.mot = mot;
+    });
+  });
+})();
+
+// Apparition douce au defilement (cartes, titres de section, membres, etc.)
+// Progressive enhancement : sans JS ou avec prefers-reduced-motion, le
+// contenu est deja visible normalement (voir .reveal dans style.css).
+(function() {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cibles = document.querySelectorAll(
+    '.carte, .section-titre, .membre, .contact-carte, .galerie img, .pole-titre, .faq-item, .guide-bloc, .banniere-illustree .banniere-img'
+  );
+  if (!cibles.length || !('IntersectionObserver' in window)) return;
+
+  const observateur = new IntersectionObserver((entrees) => {
+    entrees.forEach((entree) => {
+      if (entree.isIntersecting) {
+        entree.target.classList.add('reveal-in');
+        observateur.unobserve(entree.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  cibles.forEach((el, i) => {
+    el.classList.add('reveal');
+    el.style.transitionDelay = `${Math.min(i % 6, 5) * 70}ms`;
+    observateur.observe(el);
+  });
+})();
+
 // Carrousel de fond du hero
 // L'image principale (classe "principale") reste affichee plus longtemps.
 (function() {

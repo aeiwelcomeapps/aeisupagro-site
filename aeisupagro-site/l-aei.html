@@ -7,7 +7,7 @@
   <meta name="description" content="L'AEI est le club d'accueil des étudiants internationaux de l'Institut Agro Montpellier : mission, valeurs et engagement.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="img/logo-aei.png">
 </head>
@@ -66,13 +66,22 @@
     </div>
   </header>
 
-  <section class="banniere" id="principal">
+  <section class="banniere banniere-illustree" id="principal">
     <div class="conteneur">
-      <div class="fil"><a href="index.html" data-i18n="nav.home">Accueil</a> &rsaquo; <span data-i18n="aei.crumb">L'AEI</span></div>
-      <h1 data-i18n="aei.h1">L'AEI, Accueil des Étudiants Internationaux</h1>
-      <p data-i18n="aei.sub">Le club qui accompagne les étudiants venus du monde entier, dès leur admission et tout au long de leur séjour à l'Institut Agro Montpellier.</p>
+      <div class="banniere-texte">
+        <div class="fil"><a href="index.html" data-i18n="nav.home">Accueil</a> &rsaquo; <span data-i18n="aei.crumb">L'AEI</span></div>
+        <h1 data-i18n="aei.h1">L'AEI, Accueil des Étudiants Internationaux</h1>
+        <p data-i18n="aei.sub">Le club qui accompagne les étudiants venus du monde entier, dès leur admission et tout au long de leur séjour à l'Institut Agro Montpellier.</p>
+      </div>
+      <div class="banniere-img" style="flex-basis:380px; width:380px;">
+        <img src="img/aei-groupe-montpellier.jpg" alt="L'équipe AEI lors d'une sortie à Montpellier" width="1600" height="1200" style="aspect-ratio:4/3; object-fit:cover;">
+      </div>
     </div>
   </section>
+
+  <div style="display:flex; justify-content:center; padding:56px 24px 0;">
+    <img src="img/logo-aei.png" alt="Logo AEI" width="457" height="546" style="height:120px; width:auto;">
+  </div>
 
   <section class="section">
     <div class="conteneur prose">
@@ -140,6 +149,11 @@
       </div>
     </div>
   </footer>
+
+  <a href="contact.html#form-contact" class="fab-contact" aria-label="Nous contacter">
+    <svg class="icon" aria-hidden="true"><use href="#icon-comments"></use></svg>
+    <span class="fab-texte">Une question ?</span>
+  </a>
 
   <script src="js/script.js"></script>
   <script src="js/i18n.js"></script>

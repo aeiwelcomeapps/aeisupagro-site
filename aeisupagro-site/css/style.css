@@ -21,15 +21,82 @@
   --fond: #ffffff;
   --fond-alt: #f7f8f5;
 
-  /* Typographie */
-  --font-titre: 'Poppins', system-ui, -apple-system, sans-serif;
-  --font-texte: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Typographie — titres en sans costaud et arrondi, texte courant neutre */
+  --font-titre: 'Figtree', system-ui, -apple-system, sans-serif;
+  --font-texte: 'Work Sans', system-ui, -apple-system, sans-serif;
 
-  /* Layout */
+  /* Layout — direction "organique / institutionnelle" : formes arrondies et douces,
+     pastilles de couleur, inspiree de la charte de l'Institut Agro Montpellier */
   --max-largeur: 1200px;
-  --radius: 14px;
-  --radius-sm: 8px;
-  --transition: 0.25s ease;
+  --radius: 24px;
+  --radius-sm: 14px;
+  --transition: 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- Bouton chat flottant -> formulaire de contact ---------- */
+.fab-contact {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--vert);
+  color: var(--blanc);
+  padding: 15px 20px 15px 16px;
+  border-radius: 999px;
+  box-shadow: 0 10px 28px rgba(18,63,40,0.3);
+  font-family: var(--font-titre);
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: var(--transition), box-shadow var(--transition);
+}
+.fab-contact .icon { font-size: 1.3rem; }
+.fab-contact:hover {
+  background: var(--vert-fonce);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(18,63,40,0.38);
+}
+.fab-contact .fab-texte { display: none; }
+@media (min-width: 640px) {
+  .fab-contact .fab-texte { display: inline; }
+}
+body[data-page="ct"] .fab-contact { display: none; }
+
+/* ---------- Apparition douce au defilement ----------
+   Applique par js/script.js a une liste ciblee d'elements (cartes, titres de
+   section, membres...). Si le JS ne tourne pas, la classe .reveal n'est
+   jamais ajoutee et le contenu reste visible normalement : pas de risque de
+   contenu invisible sans JS. */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.reveal-in { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ---------- Transitions fluides entre pages (View Transitions API) ----------
+   Progressive enhancement : navigateurs compatibles (Chrome/Edge recents) font
+   un fondu enchaine en changeant de page, les autres navigateurs ne voient rien
+   de different (navigation normale, zero JS necessaire). */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root) {
+  animation: aei-fondu-sortie 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+::view-transition-new(root) {
+  animation: aei-fondu-entree 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes aei-fondu-sortie {
+  to { opacity: 0; }
+}
+@keyframes aei-fondu-entree {
+  from { opacity: 0; transform: translateY(10px); }
 }
 
 /* ---------- Breakpoints ----------
@@ -61,7 +128,7 @@
 
 /* ---------- Reset ---------- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; color-scheme: light; }
 body {
   font-family: var(--font-texte);
   color: var(--noir);
@@ -101,8 +168,11 @@ h1, h2, h3, h4 {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--blanc);
-  border-bottom: 1px solid var(--gris-clair);
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border-bottom: 1px solid rgba(229,229,223,0.7);
+  transition: background-color var(--transition), box-shadow var(--transition);
 }
 .entete-inner {
   display: flex;
@@ -127,19 +197,37 @@ h1, h2, h3, h4 {
   gap: 32px;
 }
 .nav-liens a {
+  position: relative;
   font-size: 0.82rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--gris-fonce);
-  padding: 6px 0;
-  border-bottom: 3px solid transparent;
-  transition: var(--transition);
+  padding: 9px 14px;
+  border-radius: 999px;
+  transition: color var(--transition);
+  z-index: 1;
+}
+/* "Bulle" animee derriere le lien au survol : nait au centre, se dilate en douceur */
+.nav-liens a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--vert-clair);
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: -1;
 }
 .nav-liens a:hover,
 .nav-liens a.actif {
-  color: var(--vert);
-  border-bottom-color: var(--jaune);
+  color: var(--vert-fonce);
+}
+.nav-liens a:hover::before,
+.nav-liens a.actif::before {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* Bouton burger (mobile) */
@@ -158,6 +246,7 @@ h1, h2, h3, h4 {
 
 /* ---------- Boutons ---------- */
 .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -165,18 +254,32 @@ h1, h2, h3, h4 {
   font-weight: 600;
   font-size: 0.9rem;
   padding: 13px 26px;
-  border-radius: 50px;
+  border-radius: 999px;
   cursor: pointer;
-  border: 2px solid transparent;
-  transition: var(--transition);
+  border: 1px solid transparent;
+  overflow: hidden;
+  transition: var(--transition), box-shadow var(--transition);
 }
+/* Reflet qui balaie le bouton au survol, discret et rapide (pas un gimmick repete en boucle) */
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -60%;
+  width: 40%; height: 100%;
+  background: linear-gradient(115deg, transparent, rgba(255,255,255,0.45), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+.btn:hover::after { left: 130%; }
 .btn-jaune { background: var(--jaune); color: var(--noir); }
-.btn-jaune:hover { background: var(--jaune-fonce); transform: translateY(-2px); }
+.btn-jaune:hover { background: var(--jaune-fonce); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(245,166,35,0.35); }
 .btn-vert { background: var(--vert); color: var(--blanc); }
-.btn-vert:hover { background: var(--vert-fonce); transform: translateY(-2px); }
+.btn-vert:hover { background: var(--vert-fonce); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(26,92,58,0.3); }
 .btn-contour { background: transparent; color: var(--vert); border-color: var(--vert); }
 .btn-contour:hover { background: var(--vert); color: var(--blanc); }
-.btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+.btn:disabled::after { display: none; }
 
 /* ---------- Hero ---------- */
 .hero {
@@ -205,7 +308,7 @@ h1, h2, h3, h4 {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(100deg, rgba(18,63,40,0.92) 0%, rgba(18,63,40,0.75) 45%, rgba(18,63,40,0.35) 100%);
+  background: linear-gradient(185deg, rgba(18,63,40,0.55) 0%, rgba(18,63,40,0.78) 100%);
 }
 .hero-contenu {
   position: relative;
@@ -231,9 +334,9 @@ h1, h2, h3, h4 {
 }
 .hero p {
   font-size: 1.15rem;
+  font-weight: 500;
   margin-bottom: 32px;
-  border-left: 4px solid var(--jaune);
-  padding-left: 18px;
+  max-width: 46ch;
   color: #f0f0ec;
 }
 .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
@@ -249,7 +352,7 @@ h1, h2, h3, h4 {
   border: 1px solid rgba(255,255,255,0.3);
   color: var(--blanc);
   padding: 8px 18px;
-  border-radius: 50px;
+  border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 600;
   display: inline-flex;
@@ -265,9 +368,10 @@ h1, h2, h3, h4 {
 .insta-widget-wrap {
   max-width: 780px;
   margin: 0 auto;
-  border-radius: 16px;
+  border: 1px solid var(--gris-clair);
+  border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.08);
 }
 .insta-widget-wrap iframe { width: 100%; display: block; }
 
@@ -299,36 +403,74 @@ h1, h2, h3, h4 {
   background: var(--blanc);
   border: 1px solid var(--gris-clair);
   border-radius: var(--radius);
-  padding: 36px 30px;
+  padding: 32px 28px;
   transition: var(--transition);
+  overflow: hidden;
 }
 .carte:hover {
   transform: translateY(-6px);
-  border-color: var(--jaune);
-  box-shadow: 0 12px 30px rgba(26,92,58,0.1);
+  border-color: var(--vert-clair);
+  box-shadow: 0 16px 36px rgba(26,92,58,0.12);
 }
 .carte-icone {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-sm);
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
   background: var(--vert-clair);
   color: var(--vert);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   margin-bottom: 20px;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background-color var(--transition);
 }
+.carte:hover .carte-icone { transform: scale(1.1) rotate(-4deg); background: var(--jaune-clair); }
+.carte-photo {
+  display: block;
+  width: calc(100% + 56px);
+  margin: -32px -28px 20px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius) var(--radius) 0 0;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.carte:hover .carte-photo { transform: scale(1.05); }
 .carte h3 { font-size: 1.3rem; margin-bottom: 12px; }
 .carte p { color: var(--gris); }
 
 /* ---------- Bande CTA ---------- */
 .bande-cta {
+  position: relative;
   background: var(--vert);
   color: var(--blanc);
   text-align: center;
   padding: 70px 0;
+  overflow: hidden;
 }
+/* Forme organique decorative (clin d'oeil aux blobs de la charte Institut Agro),
+   un seul flourish discret, pas repete sur chaque section */
+.bande-cta::before {
+  content: '';
+  position: absolute;
+  top: -180px; right: -140px;
+  width: 440px; height: 440px;
+  background: var(--vert-fonce);
+  opacity: 0.55;
+  border-radius: 62% 38% 55% 45% / 45% 55% 42% 58%;
+  z-index: 0;
+}
+.bande-cta::after {
+  content: '';
+  position: absolute;
+  bottom: -160px; left: -120px;
+  width: 360px; height: 360px;
+  background: var(--jaune);
+  opacity: 0.12;
+  border-radius: 48% 52% 40% 60% / 55% 42% 58% 45%;
+  z-index: 0;
+}
+.bande-cta .conteneur { position: relative; z-index: 1; }
 .bande-cta h2 { color: var(--blanc); font-size: clamp(1.8rem, 3.5vw, 2.4rem); margin-bottom: 16px; }
 .bande-cta p { max-width: 560px; margin: 0 auto 32px; color: #e0ece5; font-size: 1.05rem; }
 
@@ -387,8 +529,8 @@ h1, h2, h3, h4 {
     box-shadow: -6px 0 20px rgba(0,0,0,0.08);
   }
   .nav-liens.ouvert { transform: translateX(0); }
-  .nav-liens a { width: 100%; border-bottom: 1px solid var(--gris-clair); padding: 12px 0; }
-  .nav-liens a:hover, .nav-liens a.actif { border-bottom-color: var(--gris-clair); }
+  .nav-liens a { width: 100%; border-bottom: 1px solid var(--gris-clair); border-radius: 0; padding: 12px 10px; }
+  .nav-liens a::before { border-radius: 10px; }
   .burger { display: flex; }
   .pied-grille { grid-template-columns: 1fr; gap: 30px; }
   .hero { min-height: 480px; }
@@ -409,14 +551,17 @@ h1, h2, h3, h4 {
 .guide-visuel {
   display: flex;
   justify-content: center;
+  transition: var(--transition);
 }
-.guide-visuel .icon {
-  font-size: 8rem;
-  color: var(--jaune);
+.guide-visuel img {
+  width: 230px;
+  height: auto;
+  border: 1px solid var(--gris-clair);
 }
+.guide-visuel:hover { transform: translateY(-4px); }
 @media (max-width: 900px) {
   .guide-bloc { grid-template-columns: 1fr; padding: 34px; text-align: center; gap: 30px; }
-  .guide-visuel .icon { font-size: 5rem; }
+  .guide-visuel img { width: 180px; }
 }
 
 /* ---------- Page interieure : banniere titre ---------- */
@@ -430,6 +575,49 @@ h1, h2, h3, h4 {
 .banniere p { color: #d6e2db; max-width: 620px; margin: 0 auto; font-size: 1.1rem; }
 .fil { font-size: 0.85rem; color: #a9bdb2; margin-bottom: 18px; }
 .fil a { color: var(--blanc); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Variante bannieres avec illustration (texte a gauche, image a droite) */
+.banniere-illustree .conteneur {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  text-align: left;
+  flex-wrap: wrap;
+}
+.banniere-illustree .banniere-texte { flex: 1 1 360px; }
+.banniere-illustree .banniere-texte p { margin: 0; }
+.banniere-illustree .banniere-img { flex: 0 0 220px; width: 220px; }
+.banniere-illustree .banniere-img img,
+.banniere-illustree .banniere-img svg { width: 100%; height: auto; display: block; border-radius: var(--radius); }
+
+/* Page equipe : illustration agrandie, fondue en transparence sur les bords
+   (pas de cadre net) + halo doux derriere pour la faire flotter */
+body[data-page="team"] .banniere-illustree .banniere-img {
+  flex: 0 0 340px;
+  width: 340px;
+  position: relative;
+}
+body[data-page="team"] .banniere-illustree .banniere-img::before {
+  content: '';
+  position: absolute;
+  inset: -30px;
+  background: radial-gradient(circle, rgba(245,166,35,0.35) 0%, rgba(26,92,58,0.18) 55%, transparent 75%);
+  filter: blur(6px);
+  z-index: -1;
+}
+body[data-page="team"] .banniere-illustree .banniere-img img {
+  border-radius: 0;
+  -webkit-mask-image: radial-gradient(circle, #000 62%, transparent 92%);
+  mask-image: radial-gradient(circle, #000 62%, transparent 92%);
+}
+@media (max-width: 640px) {
+  body[data-page="team"] .banniere-illustree .banniere-img { flex-basis: 220px; width: 220px; }
+}
+@media (max-width: 640px) {
+  .banniere-illustree .conteneur { text-align: center; justify-content: center; }
+  .banniere-illustree .banniere-img { flex-basis: 140px; width: 140px; order: -1; }
+}
 
 /* ---------- Contenu texte (pages) ---------- */
 .prose { max-width: 800px; margin: 0 auto; }
@@ -475,6 +663,7 @@ h1, h2, h3, h4 {
   margin: 0 auto;
 }
 .membre {
+  position: relative;
   text-align: center;
 }
 .membre-photo {
@@ -483,9 +672,58 @@ h1, h2, h3, h4 {
   object-fit: cover;
   margin: 0 auto 16px;
   border: 4px solid var(--vert-clair);
-  transition: var(--transition);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), border-color var(--transition), box-shadow var(--transition);
 }
-.membre:hover .membre-photo { border-color: var(--jaune); transform: scale(1.05); }
+.membre:hover .membre-photo {
+  border-color: var(--jaune);
+  transform: scale(1.18);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+}
+
+/* Bulle "mot gentil" au survol : contenu lu dans l'attribut data-mot du HTML,
+   pur CSS (content: attr()), donc aucune dependance JS. */
+.membre::after {
+  content: attr(data-mot);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-bottom: 16px;
+  background: var(--blanc);
+  color: var(--vert-fonce);
+  font-family: var(--font-titre);
+  font-weight: 700;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  padding: 9px 16px;
+  border-radius: 999px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.16);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 8px) scale(0.7);
+  transform-origin: bottom center;
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 5;
+}
+.membre::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-bottom: 7px;
+  width: 14px; height: 14px;
+  background: var(--blanc);
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 8px) scale(0.7);
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 5;
+}
+.membre:hover::after,
+.membre:hover::before {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
 .membre .nom-membre { font-family: var(--font-titre); font-weight: 600; font-size: 1.05rem; color: var(--noir); }
 .membre .role-membre { color: var(--jaune-fonce); font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; }
 .membre .wa {
@@ -520,16 +758,16 @@ h1, h2, h3, h4 {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background: var(--noir);
+  background: var(--vert);
   color: var(--blanc);
   padding: 12px 24px;
-  border-radius: 12px;
+  border-radius: 999px;
   transition: var(--transition);
   position: relative;
 }
-.btn-store:hover { background: var(--vert); transform: translateY(-2px); }
+.btn-store:hover { background: var(--vert-fonce); }
 .btn-store-disabled { opacity: 0.7; cursor: not-allowed; }
-.btn-store-disabled:hover { background: var(--noir); transform: none; }
+.btn-store-disabled:hover { background: var(--vert); }
 .btn-store .icon { font-size: 1.8rem; }
 .btn-store .store-txt { display: flex; flex-direction: column; line-height: 1.2; text-align: left; }
 .btn-store .store-txt .petit { font-size: 0.7rem; opacity: 0.8; }
@@ -554,12 +792,16 @@ h1, h2, h3, h4 {
 .form-contact textarea {
   width: 100%;
   padding: 13px 16px;
+  background: var(--blanc);
+  color: var(--noir);
   border: 1px solid var(--gris-clair);
   border-radius: var(--radius-sm);
   font-family: var(--font-texte);
   font-size: 1rem;
   transition: var(--transition);
 }
+.form-contact input::placeholder,
+.form-contact textarea::placeholder { color: var(--gris); opacity: 1; }
 .form-contact input:focus,
 .form-contact textarea:focus {
   outline: none;
@@ -616,7 +858,7 @@ h1, h2, h3, h4 {
   transition: box-shadow var(--transition), border-color var(--transition);
 }
 .faq-item:hover { border-color: var(--vert); }
-.faq-item[open] { box-shadow: 0 8px 22px rgba(26,92,58,0.08); border-color: var(--vert); }
+.faq-item[open] { border-color: var(--vert); }
 .faq-item summary {
   cursor: pointer;
   padding: 18px 20px;

@@ -7,7 +7,7 @@
   <meta name="description" content="L'AEI accompagne les étudiants internationaux de l'Institut Agro Montpellier, dès leur admission et tout au long de leur séjour.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="img/logo-aei.png">
 </head>
@@ -77,7 +77,7 @@
     </div>
     <span class="badge-campus" data-i18n="hero.badge">&#128205; Campus de Montpellier</span>
     <div class="conteneur hero-contenu">
-      <span class="eyebrow" data-i18n="hero.eyebrow">&#127891; Club des étudiants internationaux</span>
+      <span class="eyebrow" data-i18n="hero.eyebrow">&#127891; Club d'Accueil des Étudiants Internationaux</span>
       <h1 data-i18n="hero.title">Bienvenue chez vous, à l'Institut Agro et à Montpellier.</h1>
       <p data-i18n="hero.text">L'AEI accompagne et accueille les étudiants internationaux de l'Institut Agro Montpellier, dès leur admission et tout au long de leur séjour.</p>
       <div class="hero-btns">
@@ -97,17 +97,17 @@
       </div>
       <div class="grille-cartes">
         <div class="carte">
-          <div class="carte-icone"><svg class="icon" aria-hidden="true"><use href="#icon-plane-departure"></use></svg></div>
+          <img class="carte-photo" src="img/act-avant-arrivee.jpg" alt="" loading="lazy">
           <h3 data-i18n="home.c1.title">Avant l'arrivée</h3>
           <p data-i18n="home.c1.text">Nous prenons contact avec vous dès votre admission, depuis votre pays d'origine, pour préparer sereinement votre venue.</p>
         </div>
         <div class="carte">
-          <div class="carte-icone"><svg class="icon" aria-hidden="true"><use href="#icon-handshake"></use></svg></div>
+          <img class="carte-photo" src="img/act-accueil-arrivee.jpg" alt="" loading="lazy">
           <h3 data-i18n="home.c2.title">Intégration &amp; Accueil</h3>
           <p data-i18n="home.c2.text">Parrainage, accueil à l'arrivée, aide aux démarches et permanences pour faciliter votre installation sur le campus.</p>
         </div>
         <div class="carte">
-          <div class="carte-icone"><svg class="icon" aria-hidden="true"><use href="#icon-users"></use></svg></div>
+          <img class="carte-photo" src="img/act-evenements-interculturels.jpg" alt="" loading="lazy">
           <h3 data-i18n="home.c3.title">Tout au long du séjour</h3>
           <p data-i18n="home.c3.text">Activités culturelles, événements et rencontres pour créer des liens et vous sentir chez vous, toute l'année.</p>
         </div>
@@ -127,9 +127,9 @@
             <svg class="icon" aria-hidden="true"><use href="#icon-download"></use></svg> <span data-i18n="home.guide.btn">Télécharger le guide</span>
           </a>
         </div>
-        <div class="guide-visuel">
-          <svg class="icon" aria-hidden="true"><use href="#icon-book-open"></use></svg>
-        </div>
+        <a class="guide-visuel" href="guide/Mon_guide_2026-2027.pdf" download aria-label="Télécharger le guide « Mon ami » (PDF)">
+          <img src="img/guide-couverture.jpg" alt="Couverture du guide « Mon ami » 2026-2027" width="700" height="989" loading="lazy">
+        </a>
       </div>
     </div>
   </section>
@@ -201,6 +201,11 @@
       </div>
     </div>
   </footer>
+
+  <a href="contact.html#form-contact" class="fab-contact" aria-label="Nous contacter">
+    <svg class="icon" aria-hidden="true"><use href="#icon-comments"></use></svg>
+    <span class="fab-texte">Une question ?</span>
+  </a>
 
   <script src="js/script.js"></script>
   <script src="js/i18n.js"></script>
