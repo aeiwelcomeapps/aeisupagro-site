@@ -16,25 +16,25 @@ if (burger && menu) {
   });
 }
 
-// Bulle "mot gentil" au survol des membres de l'equipe : un mot tire au
-// hasard dans une liste, redifferent a chaque survol (y compris en
-// repassant sur la meme photo apres etre parti). Le CSS lit la valeur
-// vivante de data-mot via content: attr(data-mot) -- aucune autre
-// modification necessaire cote CSS. Sans JS, chaque membre garde son mot
-// gentil fixe defini dans le HTML (degradation normale, rien de casse).
+// Bulle "mot gentil" au survol des membres de l'equipe : chaque membre a sa
+// propre petite banque de mots (data-mots, accordee a son genre/role), tiree
+// au hasard a chaque survol (y compris en repassant sur la meme photo apres
+// etre parti). Le CSS lit la valeur vivante de data-mot via
+// content: attr(data-mot) -- aucune autre modification necessaire cote CSS.
+// Sans JS, chaque membre garde son mot gentil fixe defini dans le HTML
+// (degradation normale, rien de casse).
 (function() {
-  const motsGentils = [
-    'Merci pour tout ! 🌟', 'Toujours là ! 💪', 'Super équipe ! ✨',
-    'Un vrai pilier ! 🙌', 'Précieux conseil ! 💚', 'Toujours créative ! 🎨',
-    'Pleine d\'énergie ! ⚡', 'Reine de la fête ! 🎉', 'Sourire contagieux ! 😊',
-    'Toujours partant ! 🚀', 'Un vrai bonheur ! 🌈', 'Merci à toi ! 🤍',
-    'Top motivation ! 🔥', 'Toujours souriant·e ! 😄', 'Génial, merci ! 👏'
-  ];
-  const membres = document.querySelectorAll('.membre[data-mot]');
+  const membres = document.querySelectorAll('.membre[data-mots]');
   membres.forEach((el) => {
+    let mots;
+    try {
+      mots = JSON.parse(el.dataset.mots);
+    } catch (e) {
+      return;
+    }
+    if (!Array.isArray(mots) || !mots.length) return;
     el.addEventListener('mouseenter', () => {
-      const mot = motsGentils[Math.floor(Math.random() * motsGentils.length)];
-      el.dataset.mot = mot;
+      el.dataset.mot = mots[Math.floor(Math.random() * mots.length)];
     });
   });
 })();
