@@ -317,6 +317,13 @@ h1, h2, h3, h4 {
   font-size: 1.8rem;
   margin-bottom: 20px;
 }
+.carte-photo {
+  display: block;
+  width: calc(100% + 60px);
+  margin: -36px -30px 20px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
 .carte h3 { font-size: 1.3rem; margin-bottom: 12px; }
 .carte p { color: var(--gris); }
 
