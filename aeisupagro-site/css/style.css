@@ -21,15 +21,36 @@
   --fond: #ffffff;
   --fond-alt: #f7f8f5;
 
-  /* Typographie — une seule famille, graisses variées (choix assume, pas de duo serif/sans par defaut) */
-  --font-titre: 'Space Grotesk', system-ui, -apple-system, sans-serif;
-  --font-texte: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  /* Typographie — titres en sans costaud et arrondi, texte courant neutre */
+  --font-titre: 'Figtree', system-ui, -apple-system, sans-serif;
+  --font-texte: 'Work Sans', system-ui, -apple-system, sans-serif;
 
-  /* Layout — direction "suisse / typographique" : angles droits partout, aucune ombre decorative */
+  /* Layout — direction "organique / institutionnelle" : formes arrondies et douces,
+     pastilles de couleur, inspiree de la charte de l'Institut Agro Montpellier */
   --max-largeur: 1200px;
-  --radius: 0;
-  --radius-sm: 0;
-  --transition: 0.2s ease;
+  --radius: 24px;
+  --radius-sm: 14px;
+  --transition: 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- Transitions fluides entre pages (View Transitions API) ----------
+   Progressive enhancement : navigateurs compatibles (Chrome/Edge recents) font
+   un fondu enchaine en changeant de page, les autres navigateurs ne voient rien
+   de different (navigation normale, zero JS necessaire). */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root) {
+  animation: aei-fondu-sortie 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+::view-transition-new(root) {
+  animation: aei-fondu-entree 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes aei-fondu-sortie {
+  to { opacity: 0; }
+}
+@keyframes aei-fondu-entree {
+  from { opacity: 0; transform: translateY(10px); }
 }
 
 /* ---------- Breakpoints ----------
@@ -165,18 +186,18 @@ h1, h2, h3, h4 {
   font-weight: 600;
   font-size: 0.9rem;
   padding: 13px 26px;
-  border-radius: 0;
+  border-radius: 999px;
   cursor: pointer;
   border: 1px solid transparent;
   transition: var(--transition);
 }
 .btn-jaune { background: var(--jaune); color: var(--noir); }
-.btn-jaune:hover { background: var(--jaune-fonce); }
+.btn-jaune:hover { background: var(--jaune-fonce); transform: translateY(-2px); }
 .btn-vert { background: var(--vert); color: var(--blanc); }
-.btn-vert:hover { background: var(--vert-fonce); }
+.btn-vert:hover { background: var(--vert-fonce); transform: translateY(-2px); }
 .btn-contour { background: transparent; color: var(--vert); border-color: var(--vert); }
 .btn-contour:hover { background: var(--vert); color: var(--blanc); }
-.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
 
 /* ---------- Hero ---------- */
 .hero {
@@ -205,7 +226,7 @@ h1, h2, h3, h4 {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(18,63,40,0.6);
+  background: linear-gradient(185deg, rgba(18,63,40,0.55) 0%, rgba(18,63,40,0.78) 100%);
 }
 .hero-contenu {
   position: relative;
@@ -249,7 +270,7 @@ h1, h2, h3, h4 {
   border: 1px solid rgba(255,255,255,0.3);
   color: var(--blanc);
   padding: 8px 18px;
-  border-radius: 0;
+  border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 600;
   display: inline-flex;
@@ -266,7 +287,9 @@ h1, h2, h3, h4 {
   max-width: 780px;
   margin: 0 auto;
   border: 1px solid var(--gris-clair);
+  border-radius: var(--radius);
   overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.08);
 }
 .insta-widget-wrap iframe { width: 100%; display: block; }
 
@@ -292,48 +315,76 @@ h1, h2, h3, h4 {
 .grille-cartes {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 0;
-  border-top: 1px solid var(--gris-clair);
+  gap: 28px;
 }
 .carte {
-  background: transparent;
-  border: none;
-  border-right: 1px solid var(--gris-clair);
-  border-radius: 0;
-  padding: 36px 30px;
+  background: var(--blanc);
+  border: 1px solid var(--gris-clair);
+  border-radius: var(--radius);
+  padding: 32px 28px;
   transition: var(--transition);
+  overflow: hidden;
 }
-.carte:last-child { border-right: none; }
 .carte:hover {
-  background: var(--vert-clair);
+  transform: translateY(-6px);
+  border-color: var(--vert-clair);
+  box-shadow: 0 16px 36px rgba(26,92,58,0.12);
 }
 .carte-icone {
-  width: auto;
-  height: auto;
-  border-radius: 0;
-  background: none;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--vert-clair);
   color: var(--vert);
-  display: block;
-  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
   margin-bottom: 20px;
 }
 .carte-photo {
   display: block;
-  width: calc(100% + 60px);
-  margin: -36px -30px 20px;
+  width: calc(100% + 56px);
+  margin: -32px -28px 20px;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+  border-radius: var(--radius) var(--radius) 0 0;
 }
 .carte h3 { font-size: 1.3rem; margin-bottom: 12px; }
 .carte p { color: var(--gris); }
 
 /* ---------- Bande CTA ---------- */
 .bande-cta {
+  position: relative;
   background: var(--vert);
   color: var(--blanc);
   text-align: center;
   padding: 70px 0;
+  overflow: hidden;
 }
+/* Forme organique decorative (clin d'oeil aux blobs de la charte Institut Agro),
+   un seul flourish discret, pas repete sur chaque section */
+.bande-cta::before {
+  content: '';
+  position: absolute;
+  top: -180px; right: -140px;
+  width: 440px; height: 440px;
+  background: var(--vert-fonce);
+  opacity: 0.55;
+  border-radius: 62% 38% 55% 45% / 45% 55% 42% 58%;
+  z-index: 0;
+}
+.bande-cta::after {
+  content: '';
+  position: absolute;
+  bottom: -160px; left: -120px;
+  width: 360px; height: 360px;
+  background: var(--jaune);
+  opacity: 0.12;
+  border-radius: 48% 52% 40% 60% / 55% 42% 58% 45%;
+  z-index: 0;
+}
+.bande-cta .conteneur { position: relative; z-index: 1; }
 .bande-cta h2 { color: var(--blanc); font-size: clamp(1.8rem, 3.5vw, 2.4rem); margin-bottom: 16px; }
 .bande-cta p { max-width: 560px; margin: 0 auto 32px; color: #e0ece5; font-size: 1.05rem; }
 
@@ -550,7 +601,7 @@ h1, h2, h3, h4 {
   background: var(--vert);
   color: var(--blanc);
   padding: 12px 24px;
-  border-radius: 0;
+  border-radius: 999px;
   transition: var(--transition);
   position: relative;
 }
