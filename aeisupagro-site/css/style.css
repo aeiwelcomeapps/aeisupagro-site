@@ -33,6 +33,37 @@
   --transition: 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* ---------- Bouton chat flottant -> formulaire de contact ---------- */
+.fab-contact {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--vert);
+  color: var(--blanc);
+  padding: 15px 20px 15px 16px;
+  border-radius: 999px;
+  box-shadow: 0 10px 28px rgba(18,63,40,0.3);
+  font-family: var(--font-titre);
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: var(--transition), box-shadow var(--transition);
+}
+.fab-contact .icon { font-size: 1.3rem; }
+.fab-contact:hover {
+  background: var(--vert-fonce);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(18,63,40,0.38);
+}
+.fab-contact .fab-texte { display: none; }
+@media (min-width: 640px) {
+  .fab-contact .fab-texte { display: inline; }
+}
+body[data-page="ct"] .fab-contact { display: none; }
+
 /* ---------- Apparition douce au defilement ----------
    Applique par js/script.js a une liste ciblee d'elements (cartes, titres de
    section, membres...). Si le JS ne tourne pas, la classe .reveal n'est
