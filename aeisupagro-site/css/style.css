@@ -590,6 +590,30 @@ h1, h2, h3, h4 {
 .banniere-illustree .banniere-img { flex: 0 0 220px; width: 220px; }
 .banniere-illustree .banniere-img img,
 .banniere-illustree .banniere-img svg { width: 100%; height: auto; display: block; border-radius: var(--radius); }
+
+/* Page equipe : illustration agrandie, fondue en transparence sur les bords
+   (pas de cadre net) + halo doux derriere pour la faire flotter */
+body[data-page="team"] .banniere-illustree .banniere-img {
+  flex: 0 0 340px;
+  width: 340px;
+  position: relative;
+}
+body[data-page="team"] .banniere-illustree .banniere-img::before {
+  content: '';
+  position: absolute;
+  inset: -30px;
+  background: radial-gradient(circle, rgba(245,166,35,0.35) 0%, rgba(26,92,58,0.18) 55%, transparent 75%);
+  filter: blur(6px);
+  z-index: -1;
+}
+body[data-page="team"] .banniere-illustree .banniere-img img {
+  border-radius: 0;
+  -webkit-mask-image: radial-gradient(circle, #000 62%, transparent 92%);
+  mask-image: radial-gradient(circle, #000 62%, transparent 92%);
+}
+@media (max-width: 640px) {
+  body[data-page="team"] .banniere-illustree .banniere-img { flex-basis: 220px; width: 220px; }
+}
 @media (max-width: 640px) {
   .banniere-illustree .conteneur { text-align: center; justify-content: center; }
   .banniere-illustree .banniere-img { flex-basis: 140px; width: 140px; order: -1; }
@@ -639,6 +663,7 @@ h1, h2, h3, h4 {
   margin: 0 auto;
 }
 .membre {
+  position: relative;
   text-align: center;
 }
 .membre-photo {
@@ -647,9 +672,58 @@ h1, h2, h3, h4 {
   object-fit: cover;
   margin: 0 auto 16px;
   border: 4px solid var(--vert-clair);
-  transition: var(--transition);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), border-color var(--transition), box-shadow var(--transition);
 }
-.membre:hover .membre-photo { border-color: var(--jaune); transform: scale(1.05); }
+.membre:hover .membre-photo {
+  border-color: var(--jaune);
+  transform: scale(1.18);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+}
+
+/* Bulle "mot gentil" au survol : contenu lu dans l'attribut data-mot du HTML,
+   pur CSS (content: attr()), donc aucune dependance JS. */
+.membre::after {
+  content: attr(data-mot);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-bottom: 16px;
+  background: var(--blanc);
+  color: var(--vert-fonce);
+  font-family: var(--font-titre);
+  font-weight: 700;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  padding: 9px 16px;
+  border-radius: 999px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.16);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 8px) scale(0.7);
+  transform-origin: bottom center;
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 5;
+}
+.membre::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-bottom: 7px;
+  width: 14px; height: 14px;
+  background: var(--blanc);
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 8px) scale(0.7);
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 5;
+}
+.membre:hover::after,
+.membre:hover::before {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
 .membre .nom-membre { font-family: var(--font-titre); font-weight: 600; font-size: 1.05rem; color: var(--noir); }
 .membre .role-membre { color: var(--jaune-fonce); font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; }
 .membre .wa {
